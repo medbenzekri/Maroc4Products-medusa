@@ -1,6 +1,6 @@
 {
   "Go back": "برگشت",
-  "Activity": "فعالیت",
+  "Activity": "فعاليات",
   "It's quite in here...": "إنه هادئ هنا...",
   "You don't have any notifications at the moment, but once you do they will live here.": "ليس لديك أي إشعارات في الوقت الحالي، ولكن عندما تحصل على إشعارات، ستظل هنا.",
   "Oh no...": "يا له من أمر...",
@@ -1324,5 +1324,12 @@
   "Insert above": "اضف أعلاه",
   "Insert below": "اضف أدناه",
   "Clear contents": "حذف المحتوي",
-  "Drafts": "المسودات"
+  "Drafts": "المسودات",
+  "Content": "المحتوي",
+  "Rating": "التقييم",
+  "Last updated": "اخر تحديث",
+  "Default Sales Channel": "قناة المبيعات الافتراضية",
+  "API Key Management": "إدارة مفتاح API",
+  "Control which product are available in which channels": "التحكم في المنتج المتوفر وفي أي قنوات",
+  "Taxes": "الضرائب"
 }

@@ -11,6 +11,7 @@ import TableContainer from "../../organisms/table-container"
 import { useCustomerFilters } from "../customer-table/use-customer-filters"
 import { useProductReviewsColumns } from "./use-product-reviews-columns"
 import { useAdminProductReviews } from "./queries"
+import { useTranslation } from "react-i18next"
 
 const DEFAULT_PAGE_SIZE = 15
 
@@ -136,6 +137,8 @@ const ProductsReviewsTable = () => {
     refreshWithFilters()
   }, [representationObject])
 
+  const { t } = useTranslation()
+
   return (
     <TableContainer
       hasPagination
@@ -144,7 +147,7 @@ const ProductsReviewsTable = () => {
         count: count!,
         offset: queryObject.offset,
         pageSize: queryObject.offset + rows.length,
-        title: "Customers",
+        title: t("Customers"),
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -179,12 +182,12 @@ const ProductsReviewsTable = () => {
                 color={"inherit"}
                 actions={[
                   {
-                    label: "Edit",
+                    label: t("Edit"),
                     onClick: () => navigate(row.original.id),
                     icon: <EditIcon size={20} />,
                   },
                   {
-                    label: "Details",
+                    label: t("Details"),
                     onClick: () => navigate(row.original.id),
                     icon: <DetailsIcon size={20} />,
                   },
