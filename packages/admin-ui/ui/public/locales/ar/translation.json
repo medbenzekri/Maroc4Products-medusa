@@ -1331,5 +1331,9 @@
   "Default Sales Channel": "قناة المبيعات الافتراضية",
   "API Key Management": "إدارة مفتاح API",
   "Control which product are available in which channels": "التحكم في المنتج المتوفر وفي أي قنوات",
-  "Taxes": "الضرائب"
+  "Taxes": "الضرائب",
+  "Subtitle by Arabic": "العنوان الفرعي باللغة العربية",
+  "Subtitle by English": "العنوان الفرعي باللغة الانجليزية",
+  "Title by English": "العنوان باللغة الانجليزية",
+  "Title by Arabic": "العنوان باللغة العربية"
 }

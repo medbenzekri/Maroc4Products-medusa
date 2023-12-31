@@ -77,7 +77,7 @@ const GeneralForm = ({ form, requireHandle = true, isGiftCard }: Props) => {
     <div>
       <div className="gap-x-large mb-small medium:grid medium:grid-cols-2 flex flex-col">
         <InputField
-          label={t("Title")}
+          label={t("Title by English")}
           placeholder={isGiftCard ? t("Gift Card") : t("Winter Jacket")}
           required
           {...register(path("title"), {
@@ -91,7 +91,7 @@ const GeneralForm = ({ form, requireHandle = true, isGiftCard }: Props) => {
           errors={errors}
         />
         <InputField
-          label={t("Subtitle")}
+          label={t("Subtitle by English")}
           placeholder={t("Warm and cozy")}
           {...register(path("subtitle"), {
             pattern: FormValidator.whiteSpaceRule("Subtitle"),
@@ -108,7 +108,7 @@ const GeneralForm = ({ form, requireHandle = true, isGiftCard }: Props) => {
       </p>
       <div className="gap-x-large mb-smallflex medium:grid medium:grid-cols-2 flex-col">
         <InputField
-          label={t("Title")}
+          label={t("Title by Arabic")}
           placeholder={isGiftCard ? t("Gift Card") : t("Winter Jacket")}
           required
           {...register(path("title_ar"), {
@@ -122,7 +122,7 @@ const GeneralForm = ({ form, requireHandle = true, isGiftCard }: Props) => {
           errors={errors}
         />
         <InputField
-          label="العنوان الفرعي"
+          label={t("Subtitle by Arabic")}
           placeholder={t("Warm and cozy")}
           {...register(path("subtitle_ar"), {
             pattern: FormValidator.whiteSpaceRule("Subtitle"),
@@ -135,9 +135,8 @@ const GeneralForm = ({ form, requireHandle = true, isGiftCard }: Props) => {
           label={t("Handle")}
           tooltipContent={
             !requireHandle
-              ? `The handle is the part of the URL that identifies the ${
-                  isGiftCard ? t("gift card") : "product"
-                }. If not specified, it will be generated from the title.`
+              ? `The handle is the part of the URL that identifies the ${isGiftCard ? t("gift card") : "product"
+              }. If not specified, it will be generated from the title.`
               : undefined
           }
           placeholder={isGiftCard ? t("Gift Card") : t("Winter Jacket")}

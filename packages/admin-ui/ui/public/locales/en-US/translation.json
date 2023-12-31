@@ -1342,5 +1342,9 @@
   "Insert above": "Insert above",
   "Insert below": "Insert below",
   "Clear contents": "Clear contents",
-  "Drafts": "Drafts"
+  "Drafts": "Drafts",
+  "Subtitle by Arabic": "Subtitle by Arabic",
+  "Subtitle by English": "Subtitle by English",
+  "Title by Arabic": "Title by Arabic",
+  "Title by English": "Title by English"
 }
