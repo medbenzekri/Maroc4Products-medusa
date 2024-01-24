@@ -26,7 +26,7 @@ const DelimitedList: React.FC<DelimitedListProps> = ({ list, delimit = 1 }) => {
       </div>
     )
   }
-  const { t } = useTranslation
+  const { t } = useTranslation()
   return (
     <span className="inter-base-regular text-grey-50">
       {itemsToDisplay}
