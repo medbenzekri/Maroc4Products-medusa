@@ -15,7 +15,7 @@ import CheckCircleFillIcon from "../../../fundamentals/icons/check-circle-fill-i
 import TrashIcon from "../../../fundamentals/icons/trash-icon"
 import Actionables, { ActionType } from "../../../molecules/actionables"
 
-type ImageType = { selected: boolean; altText: string } & FormImage
+type ImageType = { selected: boolean } & FormImage
 
 export type MediaFormType = {
   images: ImageType[]
@@ -34,6 +34,20 @@ const MediaForm = ({ form }: Props) => {
     name: path("images"),
   })
 
+  const handleFilesChosen = (files: File[]) => {
+    if (files.length) {
+      const toAppend = files.map((file) => ({
+        url: URL.createObjectURL(file),
+        name: file.name,
+        size: file.size,
+        nativeFile: file,
+        selected: false,
+      }))
+
+      append(toAppend)
+    }
+  }
+
   const images = useWatch({
     control,
     name: path("images"),
@@ -51,22 +65,6 @@ const MediaForm = ({ form }: Props) => {
 
     return selected
   }, [images])
-
-  const handleFilesChosen = (files: File[]) => {
-    if (files.length) {
-      const toAppend = files.map((file) => ({
-        url: URL.createObjectURL(file),
-        name: file.name,
-        size: file.size,
-        nativeFile: file,
-        selected: false,
-        altText: "",
-      }))
-      console.log(files)
-
-      append( )
-    }
-  }
 
   const handleRemove = () => {
     remove(selected)
@@ -94,7 +92,7 @@ const MediaForm = ({ form }: Props) => {
       {fields.length > 0 && (
         <div className="mt-large">
           <div className="mb-small flex items-center justify-between">
-            <h2 className="inter-large-semibold">{t("Uploads")}</h2>
+          <h2 className="inter-large-semibold">{t("Uploads")}</h2>
             <ModalActions
               number={selected.length}
               onDeselect={handleDeselect}
@@ -128,7 +126,7 @@ type ImageProps = {
 }
 
 const Image = ({ image, index, form, remove }: ImageProps) => {
-  const { control, path, setValue } = form
+  const { control, path } = form
 
   const actions: ActionType[] = [
     {
@@ -139,77 +137,54 @@ const Image = ({ image, index, form, remove }: ImageProps) => {
     },
   ]
 
-  const handleSaveAltText = () => {
-    // Get the current alt text from the form
-    const altText = form.getValues(`images.${index}.altText`)
-
-    // Update the form with the modified 'altText' for the selected image
-    setValue(path(`images.${index}.altText`), altText)
-
-    console.log(`Alt Text for Image ${index}: ${altText}`)
-  }
-
   return (
     <Controller
       name={path(`images.${index}.selected`)}
       control={control}
-      render={({ field: { value, onChange } }) => (
-        <div className="relative">
-          <button
-            className={clsx(
-              "px-base py-xsmall hover:bg-grey-5 rounded-rounded group flex items-center justify-between",
-              {
-                "bg-grey-5": value,
-              }
-            )}
-            type="button"
-            onClick={() => onChange(!value)}
-          >
-            <div className="gap-x-large flex items-center">
-              <div className="flex h-16 w-16 items-center justify-center">
-                <img
-                  src={image.url}
-                  alt={image.name || "Uploaded image"}
-                  className="rounded-rounded max-h-[64px] max-w-[64px]"
-                />
-              </div>
-              <div className="inter-small-regular flex flex-col text-left">
-                <p>{image.name}</p>
-                <p className="text-grey-50">
-                  {image.size ? `${(image.size / 1024).toFixed(2)} KB` : ""}
-                </p>
-              </div>
-            </div>
-            <div className="gap-x-base flex items-center">
-              <span
-                className={clsx("hidden", {
-                  "!text-violet-60 !block": value,
-                })}
-              >
-                <CheckCircleFillIcon size={24} />
-              </span>
-            </div>
-          </button>
-          <div className="right-base absolute top-0 bottom-0 flex items-center">
-            <Actionables actions={actions} forceDropdown />
-          </div>
-          <div className="mt-small flex items-center gap-3">
-            <input
-              className="bg-grey-5 border-gray-20 px-small py-xsmall rounded-rounded focus-within:shadow-input focus-within:border-violet-60 flex h-10 w-full flex-1 items-center border"
-              type="text"
-              {...form.control?.register(`images.${index}.altText`)}
-              placeholder="Enter alt text"
-            />
+      render={({ field: { value, onChange } }) => {
+        return (
+          <div className="relative">
             <button
+              className={clsx(
+                "px-base py-xsmall hover:bg-grey-5 rounded-rounded group flex items-center justify-between",
+                {
+                  "bg-grey-5": value,
+                }
+              )}
               type="button"
-              className="btn btn-primary btn-small"
-              onClick={handleSaveAltText}
+              onClick={() => onChange(!value)}
             >
-              Save Alt Text
+              <div className="gap-x-large flex items-center">
+                <div className="flex h-16 w-16 items-center justify-center">
+                  <img
+                    src={image.url}
+                    alt={image.name || "Uploaded image"}
+                    className="rounded-rounded max-h-[64px] max-w-[64px]"
+                  />
+                </div>
+                <div className="inter-small-regular flex flex-col text-left">
+                  <p>{image.name}</p>
+                  <p className="text-grey-50">
+                    {image.size ? `${(image.size / 1024).toFixed(2)} KB` : ""}
+                  </p>
+                </div>
+              </div>
+              <div className="gap-x-base flex items-center">
+                <span
+                  className={clsx("hidden", {
+                    "!text-violet-60 !block": value,
+                  })}
+                >
+                  <CheckCircleFillIcon size={24} />
+                </span>
+              </div>
             </button>
+            <div className="right-base absolute top-0 bottom-0 flex items-center">
+              <Actionables actions={actions} forceDropdown />
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }}
     />
   )
 }
@@ -222,7 +197,6 @@ type ModalActionsProps = {
 
 const ModalActions = ({ number, onRemove, onDeselect }: ModalActionsProps) => {
   const { t } = useTranslation()
-
   return (
     <div className="flex h-10 items-center overflow-y-hidden pr-1">
       <div
