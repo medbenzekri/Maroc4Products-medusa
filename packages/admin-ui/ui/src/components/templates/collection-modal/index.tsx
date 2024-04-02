@@ -28,7 +28,9 @@ type CollectionModalProps = {
 
 type CollectionModalFormData = {
   title: string
+  title_ar: string 
   handle: string | undefined
+  handle_ar: string | undefined
   metadata: MetadataFormType
 }
 
@@ -47,6 +49,10 @@ const CollectionModal: React.FC<CollectionModalProps> = ({
     defaultValues: {
       title: collection?.title,
       handle: collection?.handle,
+      // @ts-ignore
+      title_ar: collection?.title_ar,
+      // @ts-ignore
+      handle_ar: collection?.handle_ar,
       metadata: {
         entries: Object.entries(collection?.metadata || {}).map(
           ([key, value]) => ({
@@ -64,6 +70,10 @@ const CollectionModal: React.FC<CollectionModalProps> = ({
     if (collection) {
       reset({
         title: collection.title,
+        // @ts-ignore
+        title_ar: collection.title_ar,
+        // @ts-ignore
+        handle_ar: collection.handle_ar,
         handle: collection.handle,
         metadata: {
           entries: Object.entries(collection.metadata || {}).map(
@@ -89,6 +99,8 @@ const CollectionModal: React.FC<CollectionModalProps> = ({
       update(
         {
           title: data.title,
+          title_ar: data.title_ar,
+          handle_ar: data.handle_ar,
           handle: data.handle,
           metadata: getSubmittableMetadata(data.metadata),
         },
@@ -110,7 +122,9 @@ const CollectionModal: React.FC<CollectionModalProps> = ({
       create(
         {
           title: data.title,
+          title_ar: data.title_ar,
           handle: data.handle,
+          handle_ar: data.handle_ar,
           metadata: getSubmittableMetadata(data.metadata),
         },
         {
@@ -160,6 +174,25 @@ const CollectionModal: React.FC<CollectionModalProps> = ({
                   label={t("Handle")}
                   placeholder={t("sunglasses")}
                   {...register("handle")}
+                  prefix="/"
+                  tooltip={
+                    <IconTooltip
+                      content={t(
+                        "URL Slug for the collection. Will be auto generated if left blank."
+                      )}
+                    />
+                  }
+                />
+                <InputField
+                  label={t("Title arabic")}
+                  required
+                  placeholder={t("نظارات شمسية")}
+                  {...register("title_ar", { required: true })}
+                />
+                <InputField
+                  label={t("Handle arabic")}
+                  placeholder={t("sunglasses")}
+                  {...register("handle_ar")}
                   prefix="/"
                   tooltip={
                     <IconTooltip
