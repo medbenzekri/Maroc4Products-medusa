@@ -1,4 +1,4 @@
-import { useAdminLogin } from "medusa-react"
+import { useAdminLogin ,useAdminStore} from "medusa-react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
@@ -15,6 +15,13 @@ type FormValues = {
 
 type LoginCardProps = {
   toResetPassword: () => void
+}
+
+const Store = () => {
+  const { 
+    store,
+    isLoading
+  } = useAdminStore()
 }
 
 const LoginCard = ({ toResetPassword }: LoginCardProps) => {
@@ -64,7 +71,7 @@ const LoginCard = ({ toResetPassword }: LoginCardProps) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col items-center">
           <h1 className="inter-xlarge-semibold text-grey-90 mb-large text-[20px]">
-            {t("Log in to Medusa")}
+            {t("Log in to Maroc4products",)}
           </h1>
           <div>
             <SigninInput
