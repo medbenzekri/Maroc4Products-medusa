@@ -13,6 +13,7 @@ import {
   useSortBy,
   useTable,
 } from "react-table"
+import { useTranslation } from "react-i18next"
 import useQueryFilters from "../../../hooks/use-query-filters"
 import useSetSearchParams from "../../../hooks/use-set-search-params"
 import DetailsIcon from "../../fundamentals/details-icon"
@@ -93,17 +94,18 @@ function CustomerGroupsTableRow(props: CustomerGroupsTableRowProps) {
   const { row } = props
 
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const notification = useNotification()
   const { mutate } = useAdminDeleteCustomerGroup(row.original.id)
 
   const actions: ActionType[] = [
     {
-      label: "Details",
+      label: t("Details"),
       onClick: () => navigate(row.original.id),
       icon: <DetailsIcon size={20} />,
     },
     {
-      label: "Delete",
+      label: t("Delete"),
       onClick: () => {
         mutate(undefined, {
           onSuccess: () => {
@@ -151,6 +153,7 @@ type CustomerGroupsTableProps = ReturnType<typeof useQueryFilters> & {
 function CustomerGroupsTable(props: CustomerGroupsTableProps) {
   const { customerGroups, queryObject, count, paginate, setQuery, isLoading } =
     props
+  const { t } = useTranslation()
 
   const tableConfig: TableOptions<CustomerGroup> = {
     columns: CUSTOMER_GROUPS_TABLE_COLUMNS,
@@ -209,7 +212,7 @@ function CustomerGroupsTable(props: CustomerGroupsTableProps) {
         count: count,
         offset: queryObject.offset,
         pageSize: queryObject.offset + table.rows.length,
-        title: "Customer groups",
+        title: t("Customer groups"),
         currentPage: table.state.pageIndex + 1,
         pageCount: table.pageCount,
         nextPage: handleNext,

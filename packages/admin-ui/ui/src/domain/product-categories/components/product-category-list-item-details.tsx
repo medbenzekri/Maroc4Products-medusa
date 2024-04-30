@@ -3,7 +3,8 @@ import clsx from "clsx"
 
 import { ProductCategory } from "@medusajs/medusa"
 import { useAdminDeleteProductCategory } from "medusa-react"
-
+import { useTranslation } from "react-i18next"
+import i18n from "i18next"
 import { ProductCategoriesContext } from "../pages"
 import Tooltip from "../../../components/atoms/tooltip"
 import Button from "../../../components/fundamentals/button"
@@ -30,6 +31,7 @@ function ProductCategoryListItemDetails(
   props: ProductCategoryListItemDetailsProps
 ) {
   const { item } = props
+  const { t } = useTranslation()
   const notification = useNotification()
 
   const hasChildren = !!item.category_children?.length
@@ -40,19 +42,19 @@ function ProductCategoryListItemDetails(
 
   const actions = [
     {
-      label: "Edit",
+      label: t("Edit"),
       onClick: () => productCategoriesPageContext.editCategory(item),
       icon: <EditIcon size={20} />,
     },
     {
-      label: "Delete",
+      label: t("Delete"),
       variant: "danger",
       onClick: async () => {
         try {
           await deleteCategory()
-          notification("Success", "Category deleted", "success")
+          notification(t("Success"), t("Category deleted"), "success")
         } catch (e) {
-          notification("Error", "Category deletion failed", "error")
+          notification(t("Error"), t("Category deletion failed"), "error")
         }
       },
       icon: <TrashIcon size={20} />,
@@ -86,13 +88,13 @@ function ProductCategoryListItemDetails(
                 "font-normal text-gray-400": !hasChildren,
               })}
             >
-              {item.name}
+              {i18n.language === "ar" ? item.name_ar :  item.name}
             </span>
 
             <div className="flex w-[64px] items-center justify-center">
               {!item.is_active && (
                 <TooltipIcon
-                  content="Category status is inactive"
+                  content={t("Category status is inactive")}
                   icon={
                     <TagDotIcon
                       size="32"
@@ -104,7 +106,7 @@ function ProductCategoryListItemDetails(
               )}
               {item.is_internal && (
                 <TooltipIcon
-                  content="Category visibility is private"
+                  content={t("Category visibility is private")}
                   icon={
                     <EyeOffIcon
                       color="#889096"
@@ -122,7 +124,7 @@ function ProductCategoryListItemDetails(
               style={{ zIndex: 1 }}
               content={
                 <>
-                  Add category item to{" "}
+                  {t("Add category item to")}{" "}
                   <span className="text-grey-80 font-semibold">
                     {`"${item.name}"`}
                   </span>

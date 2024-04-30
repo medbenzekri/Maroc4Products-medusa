@@ -3,6 +3,8 @@ import "./assets/styles/global.css"
 import MedusaApp from "./medusa-app"
 import { ExtensionsEntry } from "./types/extensions"
 
+import "./i18n"
+
 async function run() {
   let exts: ExtensionsEntry[] = []
 

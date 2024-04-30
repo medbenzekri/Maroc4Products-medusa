@@ -1,5 +1,6 @@
 import React from "react"
 import { Route, Routes } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 import SettingsCard from "../../components/atoms/settings-card"
 import Spacer from "../../components/atoms/spacer"
 import SettingContainer from "../../components/extensions/setting-container"
@@ -60,7 +61,7 @@ const settings: SettingsCardType[] = [
   },
   {
     heading: "Return Reasons",
-    description: "Manage resons for returned items",
+    description: "Manage reasons for returned items",
     icon: ArrowUTurnLeft,
     to: "/a/settings/return-reasons",
   },
@@ -99,11 +100,11 @@ const renderCard = ({
   feature_flag,
 }: SettingsCardType) => {
   const Icon = icon || GearIcon
-
+  const { t } = useTranslation()
   const card = (
     <SettingsCard
-      heading={heading}
-      description={description}
+      heading={t(heading)}
+      description={t(description)}
       icon={<Icon />}
       to={to}
     />
@@ -118,16 +119,16 @@ const renderCard = ({
 
 const SettingsIndex = () => {
   const { getCards } = useSettings()
-
+  const { t } = useTranslation()
   const extensionCards = getCards()
 
   return (
     <div className="gap-y-xlarge flex flex-col">
       <div className="gap-y-large flex flex-col">
         <div className="gap-y-2xsmall flex flex-col">
-          <h2 className="inter-xlarge-semibold">General</h2>
+          <h2 className="inter-xlarge-semibold">{t("General")}</h2>
           <p className="inter-base-regular text-grey-50">
-            Manage the general settings for your store
+            {t("Manage the general settings for your store")}
           </p>
         </div>
         <div className="medium:grid-cols-2 gap-y-xsmall grid grid-cols-1 gap-x-4">
@@ -137,9 +138,9 @@ const SettingsIndex = () => {
       {extensionCards.length > 0 && (
         <div className="gap-y-large flex flex-col">
           <div className="gap-y-2xsmall flex flex-col">
-            <h2 className="inter-xlarge-semibold">Extensions</h2>
+            <h2 className="inter-xlarge-semibold">{t("Extensions")}</h2>
             <p className="inter-base-regular text-grey-50">
-              Manage the settings for your store&apos;s extensions
+              {t(" Manage the settings for your store's extensions")}
             </p>
           </div>
           <div className="medium:grid-cols-2 gap-y-xsmall grid grid-cols-1 gap-x-4">

@@ -7,6 +7,7 @@ import NotificationBell from "../../molecules/notification-bell"
 import SearchBar from "../../molecules/search-bar"
 import ActivityDrawer from "../activity-drawer"
 import MailDialog from "../help-dialog"
+import LanguageMenu from "../../molecules/language-menu"
 import MenuIcon from "../../fundamentals/icons/menu-icon"
 
 const Topbar: any = ({ isSidebarOpen, toggleSidebar }: any) => {
@@ -54,6 +55,7 @@ const Topbar: any = ({ isSidebarOpen, toggleSidebar }: any) => {
           variant={"ghost"}
           hasNotifications={!!batchJobs?.length}
         />
+        <LanguageMenu />
       </div>
       {showSupportform && (
         <MailDialog

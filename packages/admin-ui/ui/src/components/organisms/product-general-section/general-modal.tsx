@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next"
 import DiscountableForm, {
   DiscountableFormType,
 } from "../../forms/product/discountable-form"
@@ -45,6 +46,7 @@ type GeneralFormWrapper = {
 }
 
 const GeneralModal = ({ product, open, onClose }: Props) => {
+  const { t } = useTranslation()
   const { onUpdate, updating } = useEditProductActions(product.id)
   const form = useForm<GeneralFormWrapper>({
     defaultValues: getDefaultValues(product),
@@ -116,7 +118,7 @@ const GeneralModal = ({ product, open, onClose }: Props) => {
       <Modal.Body>
         <Modal.Header handleClose={onReset}>
           <h1 className="inter-xlarge-semibold m-0">
-            Edit General Information
+            {t("Edit General Information")}
           </h1>
         </Modal.Header>
         <form onSubmit={onSubmit}>
@@ -127,7 +129,7 @@ const GeneralModal = ({ product, open, onClose }: Props) => {
             />
             <div className="my-xlarge">
               <h2 className="inter-base-semibold mb-base">
-                Organize {product.is_giftcard ? "Gift Card" : "Product"}
+                Organize {product.is_giftcard ? t("Gift Card") : t("Product")}
               </h2>
               <OrganizeForm form={nestedForm(form, "organize")} />
             </div>
@@ -136,7 +138,7 @@ const GeneralModal = ({ product, open, onClose }: Props) => {
               isGiftCard={product.is_giftcard}
             />
             <div className="mt-xlarge">
-              <h2 className="inter-base-semibold mb-base">Metadata</h2>
+              <h2 className="inter-base-semibold mb-base">{t("Metadata")}</h2>
               <MetadataForm form={nestedForm(form, "metadata")} />
             </div>
             <div className="mt-xlarge">
@@ -152,7 +154,7 @@ const GeneralModal = ({ product, open, onClose }: Props) => {
                 type="button"
                 onClick={onReset}
               >
-                Cancel
+                {t("Cancel")}
               </Button>
               <Button
                 size="small"
@@ -161,7 +163,7 @@ const GeneralModal = ({ product, open, onClose }: Props) => {
                 disabled={!isDirty}
                 loading={updating}
               >
-                Save
+                {t("Save")}
               </Button>
             </div>
           </Modal.Footer>

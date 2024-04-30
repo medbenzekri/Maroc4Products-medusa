@@ -43,7 +43,7 @@ type ModalType = React.FC<ModalProps> & {
 
 const Overlay: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
-    <Dialog.Overlay className="bg-grey-90/40 fixed top-0 bottom-0 left-0 right-0 z-50 grid place-items-center overflow-y-auto">
+    <Dialog.Overlay className="bg-grey-90/40 fixed top-0 bottom-0 left-0 right-0 z-50 grid place-items-center">
       {children}
     </Dialog.Overlay>
   )
@@ -57,7 +57,8 @@ const Content: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <Dialog.Content
       style={style}
-      className="medium:min-w-modal rounded-rounded bg-grey-0 w-full overflow-x-hidden"
+      // make modal max width equal 36rem
+      className="medium:min-w-modal rounded-rounded bg-grey-0 w-full max-w-xl overflow-x-hidden"
     >
       {children}
     </Dialog.Content>
@@ -111,7 +112,7 @@ Modal.Content = ({ children, className }) => {
       className={clsx(
         "overflow-y-auto px-8 pt-6",
         {
-          ["w-largeModal pb-7"]: isLargeModal && width > 800,
+          ["pb-7"]: isLargeModal && width > 800,
           ["pb-5"]: !isLargeModal,
         },
         className

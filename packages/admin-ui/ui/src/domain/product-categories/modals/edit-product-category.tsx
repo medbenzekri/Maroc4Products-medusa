@@ -1,5 +1,8 @@
 import { ProductCategory as BaseCategory } from "@medusajs/medusa"
 import { useAdminUpdateProductCategory } from "medusa-react"
+import { TFunction } from "i18next"
+import { useTranslation } from "react-i18next"
+
 import { useEffect, useState } from "react"
 import ReactQuill from "react-quill"
 import "react-quill/dist/quill.snow.css"
@@ -14,12 +17,12 @@ import { Option } from "../../../types/shared"
 import { getErrorMessage } from "../../../utils/error-messages"
 import TreeCrumbs from "../components/tree-crumbs"
 
-const visibilityOptions: Option[] = [
+const visibilityOptions: (t: TFunction) => Option[] = (t) => [
   {
-    label: "Public",
+    label: t("Public"),
     value: "public",
   },
-  { label: "Private", value: "private" },
+  { label: t("Private"), value: "private" },
 ]
 
 type ProductCategory = BaseCategory & {
@@ -28,9 +31,9 @@ type ProductCategory = BaseCategory & {
   description_ar: string
 }
 
-const statusOptions: Option[] = [
-  { label: "Active", value: "active" },
-  { label: "Inactive", value: "inactive" },
+const statusOptions:  (t: TFunction) => Option[] = (t) => [
+  { label: t("Active"), value: "active" },
+  { label: t("Inactive"), value: "inactive" },
 ]
 
 type EditProductCategoriesSideModalProps = {
@@ -56,6 +59,7 @@ function EditProductCategoriesSideModal(
   const [isActive, setIsActive] = useState(true)
   const [isPublic, setIsPublic] = useState(true)
 
+  const { t } = useTranslation()
   const notification = useNotification()
 
   const { mutateAsync: updateCategory } = useAdminUpdateProductCategory(
@@ -88,11 +92,16 @@ function EditProductCategoriesSideModal(
         is_internal: !isPublic,
       })
 
-      notification("Success", "Successfully updated the category", "success")
+      notification(
+        t("Success"),
+        t("Successfully updated the category"),
+        "success"
+      )
       close()
     } catch (e) {
-      const errorMessage = getErrorMessage(e) || "Failed to update the category"
-      notification("Error", errorMessage, "error")
+      const errorMessage =
+        getErrorMessage(e) || t("Failed to update the category")
+      notification(t("Error"), errorMessage, "error")
     }
   }
 
@@ -106,7 +115,7 @@ function EditProductCategoriesSideModal(
         {/* === HEADER === */}
         <div className="flex items-center justify-between p-6">
           <h3 className="inter-large-semibold flex items-center gap-2 text-xl text-gray-900">
-            Edit product category
+            {t("Edit product category")}
           </h3>
           <Button
             variant="secondary"
@@ -129,51 +138,51 @@ function EditProductCategoriesSideModal(
         <div className="flex-grow px-6">
           <InputField
             required
-            label="Name"
+            label={t("Name in Engilish")}
             type="string"
             name="name"
             value={name}
             className="my-6"
-            placeholder="Give this category a name"
+            placeholder={t("Give this category a name")}
             onChange={(ev) => setName(ev.target.value)}
           />
 
           <InputField
             required
-            label="Handle"
+            label={t("Handle in Engilish")}
             type="string"
             name="handle"
             value={handle}
             className="my-6"
-            placeholder="Custom handle"
+            placeholder={t("Custom handle")}
             onChange={(ev) => setHandle(ev.target.value)}
           />
 
           <div className="medium:flex-row mb-8 flex flex-col justify-between gap-6">
             <InputField
               required
-              label="Name in arabic"
+              label={t("Name in arabic")}
               type="string"
               name="name_ar"
               value={name_ar}
               className="w-[338px]"
-              placeholder="الإسم"
+              placeholder="التجميل"
               onChange={(ev) => setNameAr(ev.target.value)}
             />
 
             <InputField
-              label="Handle in arabic"
+              label={t("Handle in arabic")}
               type="string"
               name="handle_ar"
               value={handle_ar}
               className="w-[338px]"
-              placeholder="Custom handle in arabic"
+              placeholder="صنف-التجميل"
               onChange={(ev) => setHandleAr(ev.target.value)}
             />
           </div>
 
           <div className="mb-8">
-            <InputHeader label="Description" className="mb-xsmall" />
+            <InputHeader label={t("Description in English")} className="mb-xsmall" />
             <ReactQuill
               theme="snow"
               value={description}
@@ -182,7 +191,7 @@ function EditProductCategoriesSideModal(
           </div>
 
           <div className="mb-8">
-            <InputHeader label="Description in arabic" className="mb-xsmall" />
+            <InputHeader label={t("Description in arabic")} className="mb-xsmall" />
             <ReactQuill
               theme="snow"
               value={description_ar}
@@ -191,17 +200,17 @@ function EditProductCategoriesSideModal(
           </div>
 
           <NextSelect
-            label="Status"
-            options={statusOptions}
-            value={statusOptions[isActive ? 0 : 1]}
+            label={t("Status")}
+            options={statusOptions(t)}
+            value={statusOptions(t)[isActive ? 0 : 1]}
             onChange={(o) => setIsActive(o.value === "active")}
           />
 
           <NextSelect
             className="my-6"
-            label="Visibility"
-            options={visibilityOptions}
-            value={visibilityOptions[isPublic ? 0 : 1]}
+            label={t("Visibility")}
+            options={visibilityOptions(t)}
+            value={visibilityOptions(t)[isPublic ? 0 : 1]}
             onChange={(o) => setIsPublic(o.value === "public")}
           />
         </div>
@@ -212,10 +221,10 @@ function EditProductCategoriesSideModal(
         {/* === FOOTER === */}
         <div className="flex justify-end gap-2 p-3">
           <Button size="small" variant="ghost" onClick={onClose}>
-            Cancel
+            {t("Cancel")}
           </Button>
           <Button size="small" variant="primary" onClick={onSave}>
-            Save and close
+            {t("Save and close")}
           </Button>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import clsx from "clsx"
 import { useEffect } from "react"
 import { Controller, useWatch } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { NestedForm } from "../../../utils/nested-form"
 import Switch from "../../atoms/switch"
 import InfoIcon from "../../fundamentals/icons/info-icon"
@@ -18,6 +19,7 @@ type Props = {
 
 const AnalyticsConfigForm = ({ form, compact }: Props) => {
   const { control, setValue, path } = form
+  const { t } = useTranslation()
 
   const watchOptOut = useWatch({
     control,
@@ -39,28 +41,14 @@ const AnalyticsConfigForm = ({ form, compact }: Props) => {
         })}
       >
         <div className="gap-y-2xsmall flex flex-1 flex-col">
-          <div className="flex items-center">
-            <h2 className="inter-base-semibold mr-2">
-              Anonymize my usage data{" "}
-            </h2>
-            {compact && (
-              <Tooltip
-                content="You can choose to anonymize your usage data. If this option is
-              selected, we will not collect your personal information, such as
-              your name and email address."
-                side="top"
-              >
-                <InfoIcon size="18px" color={"#889096"} />
-              </Tooltip>
+          <h2 className="inter-base-semibold">
+            {t("Anonymize my usage data")}
+          </h2>
+          <p className="inter-base-regular text-grey-50">
+            {t(
+              "You can choose to anonymize your usage data. If this option is selected, we will not collect your personal information, such as your name and email address."
             )}
-          </div>
-          {!compact && (
-            <p className="inter-base-regular text-grey-50">
-              You can choose to anonymize your usage data. If this option is
-              selected, we will not collect your personal information, such as
-              your name and email address.
-            </p>
-          )}
+          </p>
         </div>
         <Controller
           name={path("anonymize")}
@@ -78,24 +66,14 @@ const AnalyticsConfigForm = ({ form, compact }: Props) => {
       </div>
       <div className="flex items-center gap-3">
         <div className="gap-y-2xsmall flex flex-1 flex-col">
-          <div className="flex items-center">
-            <h2 className="inter-base-semibold mr-2">
-              Opt out of sharing my usage data
-            </h2>
-            {compact && (
-              <Tooltip
-                content="You can always opt out of sharing your usage data at any time."
-                side="top"
-              >
-                <InfoIcon size="18px" color={"#889096"} />
-              </Tooltip>
+          <h2 className="inter-base-semibold">
+            {t("Opt out of sharing my usage data")}
+          </h2>
+          <p className="inter-base-regular text-grey-50">
+            {t(
+              "You can always opt out of sharing your usage data at any time."
             )}
-          </div>
-          {!compact && (
-            <p className="inter-base-regular text-grey-50">
-              You can always opt out of sharing your usage data at any time.
-            </p>
-          )}
+          </p>
         </div>
         <Controller
           name={path("opt_out")}

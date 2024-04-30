@@ -10,17 +10,19 @@ import { useWidgets } from "../../../providers/widget-provider"
 import CustomersPageTableHeader from "../header"
 import CustomerGroupModal from "./customer-group-modal"
 import Details from "./details"
+import { useTranslation } from "react-i18next"
 
 /*
  * Customer groups index page
  */
 function Index() {
   const { state, open, close } = useToggleState()
+  const { t } = useTranslation()
   const { getWidgets } = useWidgets()
 
   const actions = [
     {
-      label: "New group",
+      label: t("New group"),
       onClick: open,
       icon: (
         <span className="text-grey-90">

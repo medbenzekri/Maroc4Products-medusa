@@ -1,6 +1,7 @@
-import { useAdminLogin } from "medusa-react"
+import { useAdminLogin ,useAdminStore} from "medusa-react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 import { useWidgets } from "../../../providers/widget-provider"
 import InputError from "../../atoms/input-error"
 import WidgetContainer from "../../extensions/widget-container"
@@ -16,6 +17,13 @@ type LoginCardProps = {
   toResetPassword: () => void
 }
 
+const Store = () => {
+  const { 
+    store,
+    isLoading
+  } = useAdminStore()
+}
+
 const LoginCard = ({ toResetPassword }: LoginCardProps) => {
   const {
     register,
@@ -25,6 +33,7 @@ const LoginCard = ({ toResetPassword }: LoginCardProps) => {
   } = useForm<FormValues>()
   const navigate = useNavigate()
   const { mutate, isLoading } = useAdminLogin()
+  const { t } = useTranslation()
 
   const { getWidgets } = useWidgets()
 
@@ -38,7 +47,7 @@ const LoginCard = ({ toResetPassword }: LoginCardProps) => {
           "password",
           {
             type: "manual",
-            message: "These credentials do not match our records.",
+            message: t("These credentials do not match our records."),
           },
           {
             shouldFocus: true,
@@ -62,17 +71,17 @@ const LoginCard = ({ toResetPassword }: LoginCardProps) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col items-center">
           <h1 className="inter-xlarge-semibold text-grey-90 mb-large text-[20px]">
-            Log in to Medusa
+            {t("Log in to Maroc4products",)}
           </h1>
           <div>
             <SigninInput
-              placeholder="Email"
+              placeholder={t("Email")}
               {...register("email", { required: true })}
               autoComplete="email"
               className="mb-small"
             />
             <SigninInput
-              placeholder="Password"
+              placeholder={t("Password")}
               type={"password"}
               {...register("password", { required: true })}
               autoComplete="current-password"
@@ -87,13 +96,13 @@ const LoginCard = ({ toResetPassword }: LoginCardProps) => {
             type="submit"
             loading={isLoading}
           >
-            Continue
+            {t("Continue")}
           </Button>
           <span
             className="inter-small-regular text-grey-50 mt-8 cursor-pointer"
             onClick={toResetPassword}
           >
-            Forgot your password?
+            {t("Forgot your password?")}
           </span>
         </div>
       </form>

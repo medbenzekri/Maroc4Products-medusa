@@ -6,6 +6,7 @@ import {
   adminProductCategoryKeys,
   useAdminCreateProductCategory,
 } from "medusa-react"
+import { useTranslation } from "react-i18next"
 import ReactQuill from "react-quill"
 import "react-quill/dist/quill.snow.css"
 import Button from "../../../components/fundamentals/button"
@@ -18,17 +19,17 @@ import useNotification from "../../../hooks/use-notification"
 import { getErrorMessage } from "../../../utils/error-messages"
 import TreeCrumbs from "../components/tree-crumbs"
 
-const visibilityOptions = [
+const visibilityOptions = (t) => [
   {
-    label: "Public",
+    label: t("Public"),
     value: "public",
   },
-  { label: "Private", value: "private" },
+  { label: t("Private"), value: "private" },
 ]
 
-const statusOptions = [
-  { label: "Active", value: "active" },
-  { label: "Inactive", value: "inactive" },
+const statusOptions = (t) => [
+  { label: t("Active"), value: "active" },
+  { label: t("Inactive"), value: "inactive" },
 ]
 
 type CreateProductCategoryProps = {
@@ -40,6 +41,7 @@ type CreateProductCategoryProps = {
  * Focus modal container for creating Publishable Keys.
  */
 function CreateProductCategory(props: CreateProductCategoryProps) {
+  const { t } = useTranslation()
   const { closeModal, parentCategory, categories } = props
   const notification = useNotification()
   const queryClient = useQueryClient()
@@ -71,11 +73,15 @@ function CreateProductCategory(props: CreateProductCategoryProps) {
       // TODO: temporary here, investigate why `useAdminCreateProductCategory` doesn't invalidate this
       await queryClient.invalidateQueries(adminProductCategoryKeys.lists())
       closeModal()
-      notification("Success", "Successfully created a category", "success")
+      notification(
+        t("Success"),
+        t("Successfully created a category"),
+        "success"
+      )
     } catch (e) {
       const errorMessage =
-        getErrorMessage(e) || "Failed to create a new category"
-      notification("Error", errorMessage, "error")
+        getErrorMessage(e) || t("Failed to create a new category")
+      notification(t("Error"), errorMessage, "error")
     }
   }
 
@@ -94,7 +100,7 @@ function CreateProductCategory(props: CreateProductCategoryProps) {
               disabled={!name}
               className="rounded-rounded"
             >
-              Save category
+              {t("Save category")}
             </Button>
           </div>
         </div>
@@ -103,7 +109,9 @@ function CreateProductCategory(props: CreateProductCategoryProps) {
       <FocusModal.Main className="flex w-full justify-center">
         <div className="small:w-4/5 medium:w-7/12 large:w-6/12 my-16 max-w-[700px]">
           <h1 className="inter-xlarge-semibold text-grey-90 pb-6">
-            Add category {parentCategory && `to ${parentCategory.name}`}
+            {parentCategory
+              ? t("Add category to {name}", { name: parentCategory.name })
+              : t("Add category")}
           </h1>
 
           {parentCategory && (
@@ -117,34 +125,36 @@ function CreateProductCategory(props: CreateProductCategoryProps) {
             </div>
           )}
 
-          <h4 className="inter-large-semibold text-grey-90 pb-1">Details</h4>
+          <h4 className="inter-large-semibold text-grey-90 pb-1">
+            {t("Details")}
+          </h4>
 
           <div className="medium:flex-row mb-8 flex flex-col justify-between gap-6">
             <InputField
               required
-              label="Name"
+              label={t("Name in Engilish")}
               type="string"
               name="name"
               value={name}
               className="w-[338px]"
-              placeholder="Give this category a name"
+              placeholder={t("Give this category a name")}
               onChange={(ev) => setName(ev.target.value)}
             />
 
             <InputField
-              label="Handle"
+              label={t("Handle in Engilish")}
               type="string"
               name="handle"
               value={handle}
               className="w-[338px]"
-              placeholder="Custom handle"
+              placeholder={t("Custom handle")}
               onChange={(ev) => setHandle(ev.target.value)}
             />
           </div>
           <div className="medium:flex-row mb-8 flex flex-col justify-between gap-6">
             <InputField
               required
-              label="Name in arabic"
+              label={t("Name in arabic")}
               type="string"
               name="name_ar"
               value={name_ar}
@@ -154,18 +164,18 @@ function CreateProductCategory(props: CreateProductCategoryProps) {
             />
 
             <InputField
-              label="Handle in arabic"
+              label={t("Handle in arabic")}
               type="string"
               name="handle_ar"
               value={handle_ar}
               className="w-[338px]"
-              placeholder="Custom handle in arabic"
+              placeholder={t("Custom handle in arabic")}
               onChange={(ev) => setHandleAr(ev.target.value)}
             />
           </div>
 
           <div className="mb-8">
-            <InputHeader label="Description" className="mb-xsmall" />
+            <InputHeader label={t("Description in English")} className="mb-xsmall" />
             <ReactQuill
               theme="snow"
               value={description}
@@ -174,7 +184,7 @@ function CreateProductCategory(props: CreateProductCategoryProps) {
           </div>
 
           <div className="mb-8">
-            <InputHeader label="Description in arabic" className="mb-xsmall" />
+            <InputHeader label={t("Description in arabic")} className="mb-xsmall" />
             <ReactQuill
               theme="snow"
               value={description_ar}
@@ -185,18 +195,18 @@ function CreateProductCategory(props: CreateProductCategoryProps) {
           <div className="medium:flex-row mb-8 flex flex-col justify-between gap-6">
             <div className="flex-1">
               <NextSelect
-                label="Status"
-                options={statusOptions}
-                value={statusOptions[isActive ? 0 : 1]}
+                label={t("Status")}
+                options={statusOptions(t)}
+                value={statusOptions(t)[isActive ? 0 : 1]}
                 onChange={(o) => setIsActive(o.value === "active")}
               />
             </div>
 
             <div className="flex-1">
               <NextSelect
-                label="Visibility"
-                options={visibilityOptions}
-                value={visibilityOptions[isPublic ? 0 : 1]}
+                label={t("Visibility")}
+                options={visibilityOptions(t)}
+                value={visibilityOptions(t)[isPublic ? 0 : 1]}
                 onChange={(o) => setIsPublic(o.value === "public")}
               />
             </div>

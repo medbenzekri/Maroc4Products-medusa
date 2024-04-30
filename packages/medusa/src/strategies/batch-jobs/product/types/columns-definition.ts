@@ -18,8 +18,8 @@ export const productColumnsDefinition: ProductColumnDefinition = {
       entityName: "product",
     },
   },
-  "Product Handle": {
-    name: "Product Handle",
+  "Product Handle English": {
+    name: "Product Handle English",
     importDescriptor: {
       mapTo: "product.handle",
       required: true,
@@ -29,7 +29,18 @@ export const productColumnsDefinition: ProductColumnDefinition = {
       entityName: "product",
     },
   },
-  "Product Title": {
+    "Product Handle Arabic": {
+    name: "Product Handle arabic",
+    importDescriptor: {
+      mapTo: "product.handle_ar",
+      required: true,
+    },
+    exportDescriptor: {
+      accessor: (product: Product): string => product?.handle_ar ?? "",
+      entityName: "product",
+    },
+  },
+  "Product Title English": {
     name: "Product Title",
     importDescriptor: {
       mapTo: "product.title",
@@ -39,8 +50,18 @@ export const productColumnsDefinition: ProductColumnDefinition = {
       entityName: "product",
     },
   },
-  "Product Subtitle": {
-    name: "Product Subtitle",
+  "Product Title Arabic": {
+    name: "Product Title Arabic",
+    importDescriptor: {
+      mapTo: "product.title_ar",
+    },
+    exportDescriptor: {
+      accessor: (product: Product): string => product?.title_ar ?? "",
+      entityName: "product",
+    },
+  },
+  "Product Subtitle English": {
+    name: "Product Subtitle Englsih",
     importDescriptor: {
       mapTo: "product.subtitle",
     },
@@ -49,8 +70,18 @@ export const productColumnsDefinition: ProductColumnDefinition = {
       entityName: "product",
     },
   },
-  "Product Description": {
-    name: "Product Description",
+  "Product Subtitle Arabic": {
+    name: "Product Subtitle Arabic",
+    importDescriptor: {
+      mapTo: "product.subtitle_ar",
+    },
+    exportDescriptor: {
+      accessor: (product: Product): string => product?.subtitle_ar ?? "",
+      entityName: "product",
+    },
+  },
+  "Product Description English": {
+    name: "Product Description English",
     importDescriptor: {
       mapTo: "product.description",
     },
@@ -59,6 +90,17 @@ export const productColumnsDefinition: ProductColumnDefinition = {
       entityName: "product",
     },
   },
+  "Product Description Arabic": {
+    name: "Product Description Arabic",
+    importDescriptor: {
+      mapTo: "product.description_ar",
+    },
+    exportDescriptor: {
+      accessor: (product: Product): string => product?.description_ar ?? "",
+      entityName: "product",
+    },
+  },
+
   "Product Status": {
     name: "Product Status",
     importDescriptor: {
@@ -160,6 +202,40 @@ export const productColumnsDefinition: ProductColumnDefinition = {
     exportDescriptor: {
       accessor: (product: Product): string =>
         product?.material?.toString() ?? "",
+      entityName: "product",
+    },
+  },
+
+  // PRODUCT SEO
+
+  
+  "Product SEO Title": {
+    name: "Product SEO Title",
+    importDescriptor: {
+      mapTo: "product.seo_title",
+    },
+    exportDescriptor: {
+      accessor: (product: Product): string => product?.seo_title ?? "",
+      entityName: "product",
+    },
+  },
+  "Product SEO Description": {
+    name: "Product SEO Description",
+    importDescriptor: {
+      mapTo: "product.seo_description",
+    },
+    exportDescriptor: {
+      accessor: (product: Product): string => product?.seo_description ?? "",
+      entityName: "product",
+    },
+  },
+  "Product SEO URL": {
+    name: "Product SEO URL",
+    importDescriptor: {
+      mapTo: "product.seo_url",
+    },
+    exportDescriptor: {
+      accessor: (product: Product): string => product?.seo_url ?? "",
       entityName: "product",
     },
   },

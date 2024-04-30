@@ -23,8 +23,8 @@ const PublicLayout = ({ children }: PropsWithChildren) => {
 
 const Logo = () => {
   return (
-    <div className="w-5xlarge h-5xlarge flex items-center justify-center rounded-full bg-gradient-to-t from-[#26292B] via-[#151718] to-[#151718]">
-      <SVG />
+    <div className="w-5xlarge h-5xlarge flex items-center justify-center rounded-full ">
+      <img src="https://maroc4products.nyc3.digitaloceanspaces.com/designs/logo/logo%20without%20background.png" alt="logo" />
     </div>
   )
 }
@@ -56,6 +56,7 @@ const SVG = () => {
         </linearGradient>
       </defs>
     </svg>
+
   )
 }
 

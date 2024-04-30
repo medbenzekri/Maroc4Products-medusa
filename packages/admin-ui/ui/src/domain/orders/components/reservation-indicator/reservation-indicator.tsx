@@ -1,5 +1,5 @@
 import { useAdminStockLocations, useAdminVariantsInventory } from "medusa-react"
-
+import { useTranslation } from "react-i18next"
 import Button from "../../../../components/fundamentals/button"
 import CheckCircleFillIcon from "../../../../components/fundamentals/icons/check-circle-fill-icon"
 import CircleQuarterSolid from "../../../../components/fundamentals/icons/circle-quarter-solid"
@@ -18,6 +18,7 @@ const ReservationIndicator = ({
   reservations?: ReservationItemDTO[]
   lineItem: LineItem
 }) => {
+  const { t } = useTranslation()
   const { variant, isLoading, isFetching } = useAdminVariantsInventory(
     lineItem.variant_id!,
     {
@@ -58,7 +59,9 @@ const ReservationIndicator = ({
               <div className="gap-y-base grid grid-cols-1 divide-y">
                 {!!awaitingReservation && (
                   <span className="flex w-full items-center">
-                    {awaitingReservation} items not reserved
+                   { t("{awaitingReservation} items not reserved", {
+                    awaitingReservation,
+                    })}
                   </span>
                 )}
                 {reservations?.map((reservation) => (
@@ -74,7 +77,7 @@ const ReservationIndicator = ({
               </div>
             ) : (
               <span className="flex w-full items-center">
-                This item has been fulfilled.
+                {t("This item has been fulfilled.")}
               </span>
             )}
           </div>
@@ -115,16 +118,20 @@ const EditReservationButton = ({
   lineItem: LineItem
   onClick: () => void
 }) => {
+  const { t } = useTranslation()
   return (
     <div className="pt-base first:pt-0">
-      {`${reservation.quantity} item: ${locationName}`}
+      {t("{quantity} item: ${locationName}", {
+        quantity: reservation.quantity,
+        locationName,
+      })}
       <Button
         onClick={onClick}
         variant="ghost"
         size="small"
         className="mt-2 w-full border"
       >
-        Edit reservation
+        {t("Edit Allocation")}
       </Button>
     </div>
   )

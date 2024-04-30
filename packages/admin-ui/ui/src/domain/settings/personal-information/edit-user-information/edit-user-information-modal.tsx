@@ -2,6 +2,7 @@ import { User } from "@medusajs/medusa"
 import { useAdminGetSession, useAdminUpdateUser } from "medusa-react"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import Button from "../../../../components/fundamentals/button"
 import InputField from "../../../../components/molecules/input"
 import Modal from "../../../../components/molecules/modal"
@@ -21,6 +22,7 @@ type EditInformationFormType = {
 const EditUserInformationModal = ({ user, open, onClose }: Props) => {
   const { mutate, isLoading: isSubmitting } = useAdminUpdateUser(user.id)
   const { refetch } = useAdminGetSession()
+  const { t } = useTranslation()
 
   const {
     register,
@@ -44,14 +46,14 @@ const EditUserInformationModal = ({ user, open, onClose }: Props) => {
       {
         onSuccess: () => {
           notification(
-            "Success",
-            "Your information was successfully updated",
+            t("Success"),
+            t("Your information was successfully updated"),
             "success"
           )
           refetch()
           onClose()
         },
-        onError: () => {},
+        onError: () => { },
       }
     )
   })
@@ -59,7 +61,7 @@ const EditUserInformationModal = ({ user, open, onClose }: Props) => {
   return (
     <Modal handleClose={onClose} open={open} isLargeModal={false}>
       <Modal.Header handleClose={onClose}>
-        <h1 className="inter-xlarge-semibold">Edit information</h1>
+        <h1 className="inter-xlarge-semibold">{t("Edit information")}</h1>
       </Modal.Header>
       <Modal.Body>
         <Modal.Content>
@@ -68,12 +70,12 @@ const EditUserInformationModal = ({ user, open, onClose }: Props) => {
               <InputField
                 {...register("first_name")}
                 errors={errors}
-                label="First name"
+                label={t("First name")}
               />
               <InputField
                 {...register("last_name")}
                 errors={errors}
-                label="Last name"
+                label={t("Last name")}
               />
             </div>
           </div>
@@ -81,7 +83,7 @@ const EditUserInformationModal = ({ user, open, onClose }: Props) => {
         <Modal.Footer className="border-grey-20 pt-base border-t">
           <div className="gap-x-xsmall flex w-full items-center justify-end">
             <Button variant="secondary" size="small" onClick={onClose}>
-              Cancel
+              {t("Cancel")}
             </Button>
             <Button
               variant="primary"
@@ -90,7 +92,7 @@ const EditUserInformationModal = ({ user, open, onClose }: Props) => {
               disabled={isSubmitting}
               onClick={onSubmit}
             >
-              Submit and close
+              {t("Submit and close")}
             </Button>
           </div>
         </Modal.Footer>

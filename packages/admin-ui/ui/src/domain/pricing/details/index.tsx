@@ -1,4 +1,5 @@
 import { useAdminPriceList } from "medusa-react"
+import { useTranslation } from "react-i18next"
 import { useNavigate, useParams } from "react-router-dom"
 import BackButton from "../../../components/atoms/back-button"
 import Spinner from "../../../components/atoms/spinner"
@@ -12,6 +13,7 @@ import Header from "./sections/header"
 import PricesDetails from "./sections/prices-details"
 
 const PricingDetails = () => {
+  const { t } = useTranslation()
   const { id } = useParams()
   const navigate = useNavigate()
 
@@ -44,7 +46,7 @@ const PricingDetails = () => {
   return (
     <div className="pb-large">
       <BackButton
-        label="Back to Pricing"
+        label={t("Back to Pricing")}
         path="/a/pricing"
         className="mb-xsmall"
       />
@@ -76,7 +78,7 @@ const PricingDetails = () => {
             )
           })}
 
-          <RawJSON data={price_list} title="Raw price list" />
+          <RawJSON data={price_list} title={t("Raw price list")} />
         </div>
       </PriceListFormProvider>
     </div>

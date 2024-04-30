@@ -2,6 +2,7 @@ import { omit } from "lodash"
 import qs from "qs"
 import { useMemo, useReducer, useState } from "react"
 import { relativeDateFormatToTimestamp } from "../../../utils/time"
+import { useTranslation } from "react-i18next"
 
 type ProductDateFilter = null | {
   gt?: string
@@ -351,11 +352,13 @@ export const useProductFilters = (
 
     return null
   }, [representationObject, tabs])
+  
+  const { t } = useTranslation()
 
   const availableTabs = useMemo(() => {
     return [
       {
-        label: "Unpublished",
+        label: t("Unpublished"),
         value: "drafts",
       },
       ...tabs,
