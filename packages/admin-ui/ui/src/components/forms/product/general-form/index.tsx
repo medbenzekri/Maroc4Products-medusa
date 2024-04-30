@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next"
 
 const modules = {
   toolbar: [
-    [{ header: "1" }, { header: "2" }, { font: [] }],
+    [{ header: [1,2,3,false] }, { font: [] }],
     [{ size: [] }],
     ["bold", "italic", "underline", "strike", "blockquote"],
     [
@@ -40,10 +40,12 @@ const formats = [
   "blockquote",
   "list",
   "bullet",
+  "ordered",
   "indent",
   "link",
   "image",
   "video",
+  "direction",
 ]
 
 export type GeneralFormType = {
